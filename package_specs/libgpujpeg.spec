@@ -26,37 +26,36 @@ BuildRequires:  cuda-minimal-build-9-1
 %endif
 ## common fedora
 BuildRequires:	clang
-%define cuda_host_compiler --with-cuda-host-compiler=clang
+%define cuda_host_compiler --with-cuda-host-compiler=clangf
+%define distromatch 1
+%endif
 
-%else
 %if 0%{?is_opensuse} >= 1
 # opensuse branch
 ##
 %if 0%{?sle_version} < 120300
 BuildRequires:  cuda-minimal-build-9-0
-%else
-%if 0%{?sle_version} >= 150000 && 0%{?sle_version} <= 160000
-BuildRequires:  cuda-minimal-build-10-2
-%else
+%endif
+%if 0%{?sle_version} < 150000
 BuildRequires:  cuda-minimal-build-9-2
 %endif
-%endif
-##
-#if 0{?sle_version} <= 120300
-### leap 42
-BuildRequires:  clang
+%if 0%{?sle_version} >= 150000 && 0%{?sle_version} < 150200
+BuildRequires:  cuda-minimal-build-10-2
+BuildRequires:  clanga
 %define cuda_host_compiler --with-cuda-host-compiler=clang
-#else
-### leap 15 + - sle_version 150000
-#BuildRequires:  gcc
-#endif
+%endif
+%if 0%{?sle_version} >= 150200 && 0%{?sle_version} < 160000
+BuildRequires:  cuda-minimal-build-10-2
+BuildRequires:  clang
+%define cuda_host_compiler --with-cuda-host-compiler=gcc
+%endif
+%define distromatch 1
+%endif
 
-
-%else
+%if 0%{?distromatch} < 1
 BuildRequires:  cuda-minimal-build-9-1
 BuildRequires:	clang
 %define cuda_host_compiler --with-cuda-host-compiler=clang
-%endif
 %endif
 
 %description
